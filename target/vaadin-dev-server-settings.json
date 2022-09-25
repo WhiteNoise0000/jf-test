@@ -1,0 +1,14 @@
+{
+  "frontendFolder": "D:/workspaces/jf-nago/./frontend",
+  "themeFolder": "themes",
+  "themeResourceFolder": "D:/workspaces/jf-nago/target/flow-frontend",
+  "staticOutput": "D:/workspaces/jf-nago/target/classes/META-INF/VAADIN/webapp/VAADIN/static",
+  "generatedFolder": "generated",
+  "frontendBundleOutput": "D:\\workspaces\\jf-nago\\target\\classes\\META-INF\\VAADIN\\webapp",
+  "addonFrontendFolder": "target/flow-frontend/",
+  "themeName": "",
+  "clientServiceWorkerSource": "D:\\workspaces\\jf-nago\\target\\sw.ts",
+  "pwaEnabled": false,
+  "offlineEnabled": false,
+  "offlinePath": "'offline.html'"
+}
