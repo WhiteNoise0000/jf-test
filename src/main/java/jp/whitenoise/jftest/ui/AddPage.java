@@ -17,6 +17,9 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
@@ -138,6 +141,8 @@ public class AddPage extends VerticalLayout implements HasUrlParameter<Integer> 
 
     private void save() {
 
+        // TODO 入力チェック（バインダー使ってない。。）
+
         入港予定 entity = this.entity.orElse(new 入港予定());
         entity.set入港予定日(dt入港予定日.getValue());
         entity.set入港漁船(cmb入港漁船.getValue());
@@ -149,6 +154,12 @@ public class AddPage extends VerticalLayout implements HasUrlParameter<Integer> 
             }
         });
         service.save入港予定(entity);
+
+        // 保存成功
+        getUI().ifPresent((ui) -> ui.navigate(TopPage.class));
+        Notification success = new Notification("保存しました.", 5000, Position.TOP_CENTER);
+        success.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+        success.open();
     }
 
     /**
