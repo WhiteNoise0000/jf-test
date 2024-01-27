@@ -181,7 +181,7 @@ public class AddPage extends VerticalLayout implements HasUrlParameter<Integer> 
             int数量 = new IntegerField();
             int数量.setMin(1);
             int数量.setMax(99);
-            int数量.setHasControls(true);
+            int数量.setStepButtonsVisible(true);
             int数量.setRequiredIndicatorVisible(true);
             add(int数量);
             dt出荷予定日 = new DatePicker();

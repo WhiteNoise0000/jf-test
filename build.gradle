@@ -1,12 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.7.3'
-	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
-	id 'com.vaadin' version '23.2.1'
 	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'com.vaadin' version '24.3.3'
 }
 
 
-group = 'jp.whitenoise'
+group = 'org.github.whitenoise0000'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -17,6 +17,9 @@ configurations {
 }
 
 repositories {
+	maven {
+		url "https://maven-central-asia.storage-download.googleapis.com/maven2/"
+	}
 	mavenCentral()
 	maven {
 		url "https://maven.vaadin.com/vaadin-addons"
@@ -24,7 +27,7 @@ repositories {
 }
 
 ext {
-	set('vaadinVersion', "23.2.1")
+	set('vaadinVersion', "24.3.3")
 }
 
 dependencies {
