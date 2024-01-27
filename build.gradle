@@ -8,7 +8,10 @@ plugins {
 
 group = 'org.github.whitenoise0000'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+}
 
 configurations {
 	compileOnly {
