@@ -8,6 +8,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import jp.whitenoise.jftest.model.入港予定;
@@ -18,18 +19,22 @@ import jp.whitenoise.jftest.service.ListService;
 @AnonymousAllowed
 public class ListPage extends VerticalLayout {
 
-	public ListPage(ListService service) {
+	public ListPage(ListService service, AccessAnnotationChecker accessChecker) {
 		setSizeFull();
 		add(new H4("出荷予定一覧（登録順）"));
-		
+
 		Grid<入港予定> grid = new Grid<>();
 		grid.setEmptyStateText("出荷予定が未登録です。");
 		grid.setItems(service.createDataProvider());
 		grid.addColumn(s -> s.get入港予定日()).setHeader("入港予定日");
 		grid.addColumn(s -> s.get入港漁船().get漁船名()).setHeader("漁船名");
-		grid.addComponentColumn(s -> new Button(VaadinIcon.EDIT.create(), event -> {
-			UI.getCurrent().navigate(AddPage.class, s.getId());
-		})).setWidth("20px");
+		
+		// 権限がある場合は編集ボタン表示
+		if (accessChecker.hasAccess(EditPage.class)) {
+			grid.addComponentColumn(s -> new Button(VaadinIcon.EDIT.create(), event -> {
+				UI.getCurrent().navigate(EditPage.class, s.getId());
+			})).setWidth("20px");
+		}
 		grid.setSizeFull();
 		add(grid);
 	}

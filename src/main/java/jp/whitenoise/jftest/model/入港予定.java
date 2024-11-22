@@ -43,7 +43,7 @@ public class 入港予定 {
 	@NonNull
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate 入港予定日;
+	private LocalDate 入港予定日 = LocalDate.now();
 	@NonNull
 	private 漁船 入港漁船;
 	private List<入港予定明細> 明細 = new ArrayList<>();

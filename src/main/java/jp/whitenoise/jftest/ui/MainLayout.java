@@ -1,7 +1,5 @@
 package jp.whitenoise.jftest.ui;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasText.WhiteSpace;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -29,9 +27,7 @@ public class MainLayout extends AppLayout {
 
 	private final AccessAnnotationChecker accessChecker;
 
-	public MainLayout(
-			@Autowired SecurityService securityService,
-			@Autowired AccessAnnotationChecker accessChecker) {
+	public MainLayout(SecurityService secService, AccessAnnotationChecker accessChecker) {
 		this.accessChecker = accessChecker;
 
 		H3 title = new H3("漁獲・出荷予定速報");
@@ -39,12 +35,12 @@ public class MainLayout extends AppLayout {
 		addToNavbar(new DrawerToggle(), title);
 
 		// ログイン中の場合
-		if (securityService.getAuthenticatedUser() != null) {
-			HorizontalLayout hl = new HorizontalLayout(	);
+		if (secService.getAuthenticatedUser() != null) {
+			HorizontalLayout hl = new HorizontalLayout();
 			hl.setPadding(false);
 			hl.setSizeFull();
 			hl.setJustifyContentMode(JustifyContentMode.END);
-			Button btnLogOff = new Button(VaadinIcon.SIGN_OUT.create(), click -> securityService.logout());
+			Button btnLogOff = new Button("ログオフ", VaadinIcon.SIGN_OUT.create(), click -> secService.logout());
 			btnLogOff.setTooltipText("ログオフ");
 			btnLogOff.addThemeVariants(ButtonVariant.LUMO_SMALL);
 			hl.add(btnLogOff);
@@ -60,7 +56,7 @@ public class MainLayout extends AppLayout {
 		SideNav menu = new SideNav();
 		add(menu, new NavItem("集計", TopPage.class, VaadinIcon.HOME));
 		add(menu, new NavItem("一覧", ListPage.class, VaadinIcon.LIST));
-		add(menu, new NavItem("登録", AddPage.class, VaadinIcon.EDIT));
+		add(menu, new NavItem("登録", EditPage.class, VaadinIcon.EDIT));
 		return menu;
 	}
 
