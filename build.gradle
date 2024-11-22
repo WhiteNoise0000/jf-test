@@ -2,14 +2,14 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.4'
-	id 'com.vaadin' version '24.5.4'
+	id 'com.vaadin' version '24.5.5'
 }
 
-group = 'org.github.whitenoise0000'
+group = 'io.github.whitenoise0000'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -26,28 +26,32 @@ repositories {
 }
 
 ext {
-	set('vaadinVersion', "24.5.4")
+	set('vaadinVersion', "24.5.5")
+	set('springCloudAzureVersion', "5.18.0")
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// Vaadin Flow
 	implementation 'com.vaadin:vaadin-spring-boot-starter'
-	implementation 'org.springframework.session:spring-session-core'
+	// Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'com.github.appreciated:apexcharts:23.0.0'
+	
+	// Azure/CosmosDB
+	implementation 'com.azure.spring:spring-cloud-azure-starter'
+	implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	//testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {
 	imports {
 		mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+		mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
 	}
 }

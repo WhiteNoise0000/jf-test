@@ -2,28 +2,25 @@ package jp.whitenoise.jftest.model;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Entity
+@RequiredArgsConstructor
 public class 入港予定明細 {
-    
-    @Id
-    @GeneratedValue
-    private Integer 明細ID;
-    private Integer 予定ID;
-    @Column(length = 20, nullable = false)
-    private String 魚種;
-    private short 数量;
-    private LocalDate 出荷予定日;
+
+	@NonNull
+	private String 魚種;
+	private int 数量;
+	@NonNull
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate 出荷予定日;
 }
