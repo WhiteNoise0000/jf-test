@@ -40,4 +40,8 @@ public class ListService {
 			}
 		};
 	}
+
+	public void delete入港予定(String id) {
+		入港予定Dao.deleteById(id);
+	}
 }
