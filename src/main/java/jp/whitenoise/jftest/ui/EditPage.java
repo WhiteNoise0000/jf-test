@@ -155,7 +155,11 @@ public class EditPage extends VerticalLayout implements HasUrlParameter<String> 
 		入港予定 entity = binder.getBean();
 		// 全項目入力の行だけ保存
 		entity.get明細().clear();
-		list入港予定明細.stream().filter(t -> t.hasValue()).forEach(t -> entity.get明細().add(t.get明細()));
+		list入港予定明細.forEach(t -> {
+			if (t.hasValue()) {
+				entity.get明細().add(t.get明細());
+			}
+		});
 		service.save入港予定(entity);
 
 		// 保存成功
@@ -177,6 +181,10 @@ public class EditPage extends VerticalLayout implements HasUrlParameter<String> 
 		private final Button btn削除;
 
 		Item() {
+			this(new 入港予定明細());
+		}
+
+		Item(入港予定明細 entity) {
 			setAlignItems(Alignment.BASELINE);
 
 			cmb魚種 = new ComboBox<>();
@@ -208,10 +216,6 @@ public class EditPage extends VerticalLayout implements HasUrlParameter<String> 
 			btn削除 = new Button(delIcon, e -> removeItem(this));
 
 			add(cmb魚種, int数量, dt出荷予定日, btn削除);
-		}
-
-		Item(入港予定明細 entity) {
-			this();
 			binder.setBean(entity);
 		}
 

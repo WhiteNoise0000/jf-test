@@ -18,7 +18,7 @@ public class 入港予定明細 {
 
 	@NonNull
 	private String 魚種;
-	private int 数量;
+	private Integer 数量;
 	@NonNull
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonFormat(pattern = "yyyy-MM-dd")
