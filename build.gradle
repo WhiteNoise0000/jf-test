@@ -36,11 +36,11 @@ vaadin {
 }
 
 jar {
-    enabled = false // デフォルトのJAR生成を無効化
+	enabled = false // デフォルトのJAR生成を無効化
 }
 
 bootJar {
-    enabled = true // 実行可能JARのみを生成
+	enabled = true // 実行可能JARのみを生成
 }
 
 dependencies {
