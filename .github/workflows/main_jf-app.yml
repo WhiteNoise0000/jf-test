@@ -21,19 +21,14 @@ jobs:
         with:
           java-version: '21'
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-    
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v3
-        with:
-          arguments: clean build
+      - name: Build with Maven
+        run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.jar'
+          path: '${{ github.workspace }}/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -54,5 +49,5 @@ jobs:
         with:
           app-name: 'jf-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5FAC440308E9427D81D2307E2818102E }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A64247CC006943F4BA21986A51E4DCAA }}
           package: '*.jar'
