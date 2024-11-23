@@ -1,4 +1,4 @@
-package jp.whitenoise.jftest;
+package jp.whitenoise.common.security;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,7 +15,7 @@ import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 
-import jp.whitenoise.jftest.SecurityService;
+import jp.whitenoise.common.security.SecurityService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
