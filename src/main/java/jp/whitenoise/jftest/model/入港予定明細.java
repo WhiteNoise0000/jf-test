@@ -16,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class 入港予定明細 {
 
-	@NonNull
-	private String 魚種;
-	private Integer 数量;
-	@NonNull
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate 出荷予定日;
+    @NonNull
+    private String 魚種;
+    private Integer 数量;
+    @NonNull
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate 出荷予定日;
 }

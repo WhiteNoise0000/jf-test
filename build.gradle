@@ -57,6 +57,9 @@ dependencies {
 	// Azure Application Insights(監視)
 	//implementation 'com.microsoft.azure:applicationinsights-runtime-attach:3.6.2'
 
+	// LINE Messaging API
+	implementation 'com.linecorp.bot:line-bot-messaging-api-client:9.3.1'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'

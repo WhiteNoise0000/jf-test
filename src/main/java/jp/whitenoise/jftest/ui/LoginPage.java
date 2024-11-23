@@ -13,42 +13,42 @@ import com.vaadin.flow.router.Route;
 @PageTitle("ログイン")
 public class LoginPage extends VerticalLayout implements BeforeEnterObserver {
 
-	private LoginForm login = new LoginForm(new JpnLoginForm());
+    private LoginForm login = new LoginForm(new JpnLoginForm());
 
-	public LoginPage() {
-		addClassName("login-view");
-		setSizeFull();
+    public LoginPage() {
+        addClassName("login-view");
+        setSizeFull();
 
-		setJustifyContentMode(JustifyContentMode.CENTER);
-		setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
 
-		login.setAction("login");
+        login.setAction("login");
 
-		add(new H1("管理ページログイン"), login);
-	}
+        add(new H1("管理ページログイン"), login);
+    }
 
-	@Override
-	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-		if (beforeEnterEvent.getLocation()
-				.getQueryParameters()
-				.getParameters()
-				.containsKey("error")) {
-			login.setError(true);
-		}
-	}
+    @Override
+    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
+        if (beforeEnterEvent.getLocation()
+                .getQueryParameters()
+                .getParameters()
+                .containsKey("error")) {
+            login.setError(true);
+        }
+    }
 
-	private class JpnLoginForm extends LoginI18n {
-		public JpnLoginForm() {
-			super();
-			Form form = new Form();
-			form.setUsername("ユーザID");
-			form.setPassword("パスワード");
-			form.setSubmit("ログイン");
-			this.setForm(form);
-			ErrorMessage msg = new ErrorMessage();
-			msg.setTitle("ログインエラー");
-			msg.setMessage("ユーザIDまたはパスワードが異なります。");
-			this.setErrorMessage(msg);
-		}
-	}
+    private class JpnLoginForm extends LoginI18n {
+        public JpnLoginForm() {
+            super();
+            Form form = new Form();
+            form.setUsername("ユーザID");
+            form.setPassword("パスワード");
+            form.setSubmit("ログイン");
+            this.setForm(form);
+            ErrorMessage msg = new ErrorMessage();
+            msg.setTitle("ログインエラー");
+            msg.setMessage("ユーザIDまたはパスワードが異なります。");
+            this.setErrorMessage(msg);
+        }
+    }
 }

@@ -11,9 +11,9 @@ import com.azure.spring.data.cosmos.repository.config.EnableCosmosRepositories;
 @EnableCosmosAuditing
 public class CosmosConfiguration extends AbstractCosmosConfiguration {
 
-	@Override
-	protected String getDatabaseName() {
-		return "TEST";
-	}
+    @Override
+    protected String getDatabaseName() {
+        return "TEST";
+    }
 
 }

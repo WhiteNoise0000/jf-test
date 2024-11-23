@@ -26,25 +26,25 @@ import lombok.RequiredArgsConstructor;
 @Container
 public class 魚種 {
 
-	@Id
-	@GeneratedValue
-	private String id;
-	@NonNull
-	private String 名称;
+    @Id
+    @GeneratedValue
+    private String id;
+    @NonNull
+    private String 名称;
 
-	@Version
-	private String _eTag;
-	@CreatedDate
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-	private LocalDateTime createDate;
-	@CreatedBy
-	private String createdBy;
-	@LastModifiedDate
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-	private LocalDateTime lastModifyedDate;
-	@LastModifiedBy
-	private String lastModifiedBy;
+    @Version
+    private String _eTag;
+    @CreatedDate
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    private LocalDateTime createDate;
+    @CreatedBy
+    private String createdBy;
+    @LastModifiedDate
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    private LocalDateTime lastModifyedDate;
+    @LastModifiedBy
+    private String lastModifiedBy;
 
 }

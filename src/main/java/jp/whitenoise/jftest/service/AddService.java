@@ -17,7 +17,7 @@ import jp.whitenoise.jftest.model.魚種;
 @Service
 //@Transactional
 public class AddService {
-    
+
     @Autowired
     private 漁船Dao 漁船Dao;
     @Autowired
@@ -26,25 +26,25 @@ public class AddService {
     private 入港予定Dao 入港予定Dao;
 
     public List<漁船> select漁船() {
-    	// TODO debug
-    	if (漁船Dao.count() == 0) {
-    		漁船Dao.save(new 漁船("○○丸"));
-    		漁船Dao.save(new 漁船("△△丸"));
-    		漁船Dao.save(new 漁船("■■号"));
-    	}
-    	
+        // TODO debug
+        if (漁船Dao.count() == 0) {
+            漁船Dao.save(new 漁船("○○丸"));
+            漁船Dao.save(new 漁船("△△丸"));
+            漁船Dao.save(new 漁船("■■号"));
+        }
+
         return Streams.of(漁船Dao.findAll()).toList();
     }
 
     public List<魚種> select魚種() {
-    	// TODO debug
-    	if (魚種Dao.count() == 0) {
-    		魚種Dao.save(new 魚種("マグロ"));
-    		魚種Dao.save(new 魚種("サバ"));
-    		魚種Dao.save(new 魚種("アジ"));
-    	}
+        // TODO debug
+        if (魚種Dao.count() == 0) {
+            魚種Dao.save(new 魚種("マグロ"));
+            魚種Dao.save(new 魚種("サバ"));
+            魚種Dao.save(new 魚種("アジ"));
+        }
 
-    	return Streams.of(魚種Dao.findAll()).toList();
+        return Streams.of(魚種Dao.findAll()).toList();
     }
 
     public 入港予定 save入港予定(入港予定 entity) {
