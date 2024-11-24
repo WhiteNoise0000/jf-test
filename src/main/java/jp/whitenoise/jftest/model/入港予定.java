@@ -49,7 +49,7 @@ public class 入港予定 {
     private List<入港予定明細> 明細 = new ArrayList<>();
 
     @Version
-    private String _eTag;
+    private String _etag;
     @CreatedDate
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")

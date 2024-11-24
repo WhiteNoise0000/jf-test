@@ -33,7 +33,7 @@ public class 漁船 {
     private String 漁船名;
 
     @Version
-    private String _eTag;
+    private String _etag;
     @CreatedDate
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")

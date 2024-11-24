@@ -33,7 +33,7 @@ public class 魚種 {
     private String 名称;
 
     @Version
-    private String _eTag;
+    private String _etag;
     @CreatedDate
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
