@@ -1,6 +1,6 @@
-package jp.whitenoise.jftest.ui;
+package jp.whitenoise.common.ui.auth;
 
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -24,7 +24,7 @@ public class LoginPage extends VerticalLayout implements BeforeEnterObserver {
 
         login.setAction("login");
 
-        add(new H1("管理ページログイン"), login);
+        add(new H3("管理ページログイン"), login);
     }
 
     @Override
