@@ -1,9 +1,7 @@
-package jp.whitenoise.common.security;
+package jp.whitenoise.common.auth;
 
 import java.util.Optional;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,15 +14,10 @@ import com.vaadin.flow.server.VaadinServletRequest;
 import jp.whitenoise.jftest.ui.TopPage;
 
 /**
- * セキュリティサービス.
+ * 認証・認可サービス.
  */
 @Component
-public class SecurityService {
-
-    /** 管理者権限. */
-    public static final GrantedAuthority ADMIN = new SimpleGrantedAuthority("ROLE_ADMIN");
-    /** ユーザ権限. */
-    public static final GrantedAuthority USER = new SimpleGrantedAuthority("ROLE_USER");
+public class AuthService {
 
     /**
      * ログイン済みユーザ取得.
@@ -35,7 +28,10 @@ public class SecurityService {
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
         // 未ログインの場合はnull
-        return Optional.ofNullable((UserDetails) principal);
+        if (principal == null || !(principal instanceof UserDetails)) {
+            return Optional.empty();
+        }
+        return Optional.of((UserDetails) principal);
     }
 
     /**
@@ -45,7 +41,7 @@ public class SecurityService {
      */
     public boolean isAdmin() {
         Optional<UserDetails> user = getAuthenticatedUser();
-        return user.isPresent() && user.get().getAuthorities().contains(ADMIN);
+        return user.isPresent() && user.get().getAuthorities().contains(EUserRole.ADMIN.getAuthObj());
     }
 
     /**
@@ -55,7 +51,7 @@ public class SecurityService {
      */
     public boolean isUser() {
         Optional<UserDetails> user = getAuthenticatedUser();
-        return user.isPresent() && user.get().getAuthorities().contains(USER);
+        return user.isPresent() && user.get().getAuthorities().contains(EUserRole.USER.getAuthObj());
     }
 
     /**

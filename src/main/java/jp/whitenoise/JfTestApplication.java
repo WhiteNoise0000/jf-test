@@ -1,4 +1,4 @@
-package jp.whitenoise.jftest;
+package jp.whitenoise;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

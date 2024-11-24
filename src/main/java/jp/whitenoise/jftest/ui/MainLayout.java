@@ -15,7 +15,7 @@ import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 
-import jp.whitenoise.common.security.SecurityService;
+import jp.whitenoise.common.auth.AuthService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class MainLayout extends AppLayout {
 
     private final AccessAnnotationChecker accessChecker;
 
-    public MainLayout(SecurityService secService, AccessAnnotationChecker accessChecker) {
+    public MainLayout(AuthService secService, AccessAnnotationChecker accessChecker) {
         this.accessChecker = accessChecker;
 
         H3 title = new H3("漁獲・出荷予定速報");
@@ -35,7 +35,7 @@ public class MainLayout extends AppLayout {
         addToNavbar(new DrawerToggle(), title);
 
         // ログイン中の場合
-        if (secService.getAuthenticatedUser() != null) {
+        if (secService.getAuthenticatedUser().isPresent()) {
             HorizontalLayout hl = new HorizontalLayout();
             hl.setPadding(false);
             hl.setSizeFull();

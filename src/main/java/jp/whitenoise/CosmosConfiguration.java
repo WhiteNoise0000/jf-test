@@ -1,4 +1,4 @@
-package jp.whitenoise.jftest;
+package jp.whitenoise;
 
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +13,7 @@ public class CosmosConfiguration extends AbstractCosmosConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "TEST";
+        return "JFDB";
     }
 
 }
