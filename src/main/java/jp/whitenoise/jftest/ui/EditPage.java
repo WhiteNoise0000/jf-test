@@ -8,6 +8,7 @@ import java.util.Optional;
 import jakarta.annotation.security.PermitAll;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -153,21 +154,27 @@ public class EditPage extends VerticalLayout implements HasUrlParameter<String> 
             return;
         }
 
-        入港予定 entity = binder.getBean();
         // 全項目入力の行だけ保存
+        入港予定 entity = binder.getBean();
         entity.get明細().clear();
         list入港予定明細.forEach(t -> {
             if (t.hasValue()) {
                 entity.get明細().add(t.get明細());
             }
         });
-        service.save入港予定(entity);
 
-        // 保存成功
-        getUI().ifPresent((ui) -> ui.refreshCurrentRoute(true));
-        Notification success = new Notification("保存しました.", 5000, Position.BOTTOM_CENTER);
-        success.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-        success.open();
+        try {
+            service.save入港予定(entity);
+
+            // 保存成功
+            getUI().ifPresent((ui) -> ui.refreshCurrentRoute(true));
+            Notification success = new Notification("保存しました.", 5000, Position.BOTTOM_CENTER);
+            success.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+            success.open();
+        } catch (OptimisticLockingFailureException e) {
+            // 排他エラー
+            new ErrorNotification("保存失敗：ほかのユーザに更新されました").open();
+        }
     }
 
     /**
