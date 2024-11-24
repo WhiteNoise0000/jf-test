@@ -13,11 +13,12 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+import jp.whitenoise.JfTestApplication;
 import jp.whitenoise.jftest.model.入港予定;
 import jp.whitenoise.jftest.service.ListService;
 
 @Route(value = "list", layout = MainLayout.class)
-@PageTitle("登録一覧 - 漁獲予定量集計")
+@PageTitle("登録一覧 - " + JfTestApplication.APP_NAME)
 @AnonymousAllowed
 public class ListPage extends VerticalLayout {
 

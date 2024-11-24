@@ -30,6 +30,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
+import jp.whitenoise.JfTestApplication;
 import jp.whitenoise.common.ui.DatePickerI18nJpn;
 import jp.whitenoise.common.ui.ErrorNotification;
 import jp.whitenoise.common.util.UiUtil;
@@ -40,7 +41,7 @@ import jp.whitenoise.jftest.model.魚種;
 import jp.whitenoise.jftest.service.AddService;
 
 @Route(value = "edit", layout = MainLayout.class)
-@PageTitle("出荷予定登録・編集 - 漁獲予定量集計")
+@PageTitle("出荷予定登録・編集 - " + JfTestApplication.APP_NAME)
 @PermitAll
 public class EditPage extends VerticalLayout implements HasUrlParameter<String> {
 

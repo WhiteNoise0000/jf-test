@@ -7,11 +7,12 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+import jp.whitenoise.JfTestApplication;
 import jp.whitenoise.jftest.model.入港予定明細;
 import jp.whitenoise.jftest.service.TopService;
 
 @Route(value = "", layout = MainLayout.class)
-@PageTitle("TOP - 漁獲予定量集計")
+@PageTitle("出荷予定集計 - " + JfTestApplication.APP_NAME)
 @AnonymousAllowed
 public class TopPage extends VerticalLayout {
 
