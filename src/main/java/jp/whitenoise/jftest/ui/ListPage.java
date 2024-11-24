@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -35,18 +36,23 @@ public class ListPage extends VerticalLayout {
         // 権限がある場合は編集・削除ボタン表示
         if (accessChecker.hasAccess(EditPage.class)) {
             grid.addComponentColumn(s -> {
-                return new HorizontalLayout(
-                        new Button(VaadinIcon.EDIT.create(), event -> {
-                            UI.getCurrent().navigate(EditPage.class, s.getId());
-                        }), new Button(VaadinIcon.DEL.create(), event -> {
-                            new ConfirmDialog("削除確認", "選択した入港予定を削除しますか？",
-                                    "はい", yes -> {
-                                        service.delete入港予定(s.getId());
-                                        UI.getCurrent().refreshCurrentRoute(false);
-                                    },
-                                    "キャンセル", no -> {
-                                    }).open();
-                        }));
+                // 編集ボタン
+                Button btn編集 = new Button(VaadinIcon.EDIT.create(), event -> {
+                    UI.getCurrent().navigate(EditPage.class, s.getId());
+                });
+                // 削除ボタン
+                Icon delIcon = VaadinIcon.CLOSE_BIG.create();
+                delIcon.setColor("red");
+                Button btn削除 = new Button(delIcon, event -> {
+                    new ConfirmDialog("削除確認", "選択した入港予定を削除しますか？",
+                            "はい", yes -> {
+                                service.delete入港予定(s.getId());
+                                UI.getCurrent().refreshCurrentRoute(false);
+                            },
+                            "キャンセル", no -> {
+                            }).open();
+                });
+                return new HorizontalLayout(btn編集, btn削除);
             });
         }
         grid.setSizeFull();
