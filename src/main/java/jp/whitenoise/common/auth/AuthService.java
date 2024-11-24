@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
@@ -67,14 +66,14 @@ public class AuthService {
      * 
      * @return ユーザ情報（未ログインの場合はnull）
      */
-    public Optional<UserDetails> getAuthenticatedUser() {
+    public Optional<User> getAuthenticatedUser() {
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
         // 未ログインの場合はnull
-        if (principal == null || !(principal instanceof UserDetails)) {
+        if (principal == null || !(principal instanceof User)) {
             return Optional.empty();
         }
-        return Optional.of((UserDetails) principal);
+        return Optional.of((User) principal);
     }
 
     /**
@@ -83,7 +82,7 @@ public class AuthService {
      * @return ユーザ名（未ログインの場合はnull）
      */
     public Optional<String> getAuthUsername() {
-        Optional<UserDetails> user = getAuthenticatedUser();
+        Optional<User> user = getAuthenticatedUser();
         if (user.isPresent()) {
             return Optional.ofNullable(user.get().getUsername());
         }
@@ -96,8 +95,8 @@ public class AuthService {
      * @return 管理者ログイン済みの場合、true
      */
     public boolean isAdmin() {
-        Optional<UserDetails> user = getAuthenticatedUser();
-        return user.isPresent() && user.get().getAuthorities().contains(EUserRole.ADMIN.getAuthObj());
+        Optional<User> user = getAuthenticatedUser();
+        return user.isPresent() && user.get().getRoles().contains(EUserRole.ADMIN.name());
     }
 
     /**
@@ -106,8 +105,8 @@ public class AuthService {
      * @return ユーザログイン済みの場合、true
      */
     public boolean isUser() {
-        Optional<UserDetails> user = getAuthenticatedUser();
-        return user.isPresent() && user.get().getAuthorities().contains(EUserRole.USER.getAuthObj());
+        Optional<User> user = getAuthenticatedUser();
+        return user.isPresent() && user.get().getRoles().contains(EUserRole.USER.name());
     }
 
     /**
@@ -151,6 +150,7 @@ public class AuthService {
         }
         password.ifPresent(str -> entity.setPassword(encoder.encode(str)));
         entity.setEmailAddr(emailAddr);
+        entity.getRoles().clear();
         entity.getRoles().addAll(roles.stream().map(EUserRole::name).toList());
         entity.setEnabled(isEnabled);
         // ユーザ情報保存

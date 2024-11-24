@@ -75,8 +75,22 @@ public class UserEditPage extends VerticalLayout implements HasUrlParameter<Stri
         // ユーザ名
         txtユーザ名 = new TextField("ユーザ名");
         txtユーザ名.setRequired(true);
-        txtユーザ名.setAllowedCharPattern("[0-9a-zA-Z_-]");
-        txtユーザ名.setErrorMessage("ユーザ名は英数字16文字以内で入力してください。");
+        txtユーザ名.setMaxLength(16);
+        txtユーザ名.setManualValidation(true);
+        txtユーザ名.addValueChangeListener(event -> {
+            String newValue = txtユーザ名.getValue();
+            String errMsg = "";
+            boolean isInValid = false;
+            if (16 < newValue.length() && !newValue.matches("[0-9a-zA-Z_-]+")) {
+                errMsg = "ユーザ名は英数字16文字以内で入力してください。";
+                isInValid = true;
+            } else if (targetUser.isEmpty() && service.findByUsername(newValue).isPresent()) {
+                errMsg = "指定されたユーザ名は既に利用されています。";
+                isInValid = true;
+            }
+            txtユーザ名.setInvalid(isInValid);
+            txtユーザ名.setErrorMessage(errMsg);
+        });
         add(txtユーザ名);
 
         // 新パスワード
@@ -132,22 +146,23 @@ public class UserEditPage extends VerticalLayout implements HasUrlParameter<Stri
             txtパスワード確認.setRequired(true);
             return;
         }
-        // ユーザ権限の場合
-        if (!isAdmin) {
-            // 自分自身以外は編集不可
-            String loginUser = service.getAuthUsername().get();
-            if (!loginUser.equals(username)) {
-                new ErrorNotification("Accses dinied.").open();
-                UI.getCurrent().getPage().getHistory().back();
-                return;
-            }
-            // ユーザ権限で編集不可・非表示
-            txtユーザ名.setReadOnly(true);
-            cmbユーザ権限.setReadOnly(true);
-            cmbユーザ権限.setVisible(false);
-            chk有効フラグ.setReadOnly(true);
-            chk有効フラグ.setVisible(false);
+        String loginUser = service.getAuthUsername().get();
+
+        // ユーザ権限は自分自身のみ編集可
+        if (!isAdmin && !loginUser.equals(username)) {
+            UI.getCurrent().getPage().getHistory().back();
+            new ErrorNotification("Accses dinied.").open();
+            return;
         }
+
+        // 既存ユーザ名は常に編集不可
+        txtユーザ名.setReadOnly(true);
+        // ユーザ権限、もしくは管理者権限かつ自己編集の場合
+        boolean isUserOrSelfEdit = !isAdmin || loginUser.equals(username);
+        cmbユーザ権限.setReadOnly(isUserOrSelfEdit);
+        cmbユーザ権限.setVisible(!isUserOrSelfEdit);
+        chk有効フラグ.setReadOnly(isUserOrSelfEdit);
+        chk有効フラグ.setVisible(!isUserOrSelfEdit);
 
         // 編集対象ユーザの情報を画面表示
         targetUser = service.findByUsername(username);
@@ -164,8 +179,8 @@ public class UserEditPage extends VerticalLayout implements HasUrlParameter<Stri
         // 取得失敗（別ユーザが削除等）
         else {
             // エラーメッセージ表示して戻る
-            new ErrorNotification("エラー：対象ユーザが見つかりません").open();
             UI.getCurrent().getPage().getHistory().back();
+            new ErrorNotification("エラー：対象ユーザが見つかりません").open();
         }
     }
 
@@ -179,7 +194,7 @@ public class UserEditPage extends VerticalLayout implements HasUrlParameter<Stri
 
         // 入力チェックエラー
         if (!UiUtil.childIsValid(this)) {
-            Notification warn = new Notification("入力エラー", 5000, Position.BOTTOM_CENTER);
+            Notification warn = new Notification("入力内容が不正です", 5000, Position.BOTTOM_CENTER);
             warn.addThemeVariants(NotificationVariant.LUMO_WARNING);
             warn.open();
             return;
