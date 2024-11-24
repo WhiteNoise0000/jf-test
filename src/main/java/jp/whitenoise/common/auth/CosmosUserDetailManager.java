@@ -60,10 +60,12 @@ public class CosmosUserDetailManager implements UserDetailsManager {
      */
     @Override
     public void updateUser(UserDetails userDetails) {
-        User user = userDao.findByUsername(userDetails.getUsername())
+        User user = userDao.findById(userDetails.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + userDetails.getUsername()));
         user.setPassword(userDetails.getPassword());
         user.getRoles().addAll(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
+        user.setEnabled(userDetails.isEnabled());
+        user.setAccountNonLocked(userDetails.isAccountNonLocked());
         userDao.save(user);
     }
 
@@ -72,7 +74,7 @@ public class CosmosUserDetailManager implements UserDetailsManager {
      */
     @Override
     public void deleteUser(String username) {
-        Optional<User> user = userDao.findByUsername(username);
+        Optional<User> user = userDao.findById(username);
         user.ifPresent(userDao::delete);
     }
 
@@ -84,7 +86,7 @@ public class CosmosUserDetailManager implements UserDetailsManager {
 
         String currentUsername = service.getAuthenticatedUser().map(UserDetails::getUsername)
                 .orElseThrow(() -> new IllegalStateException("Not authenticated."));
-        User user = userDao.findByUsername(currentUsername)
+        User user = userDao.findById(currentUsername)
                 .orElseThrow(() -> new IllegalStateException("User not found: " + currentUsername));
 
         // パスワード検証
@@ -100,7 +102,7 @@ public class CosmosUserDetailManager implements UserDetailsManager {
      */
     @Override
     public boolean userExists(String username) {
-        return userDao.findByUsername(username).isPresent();
+        return userDao.findById(username).isPresent();
     }
 
     /**
@@ -109,7 +111,7 @@ public class CosmosUserDetailManager implements UserDetailsManager {
     @Override
     public UserDetails loadUserByUsername(String username) {
 
-        User user = userDao.findByUsername(username)
+        User user = userDao.findById(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
