@@ -2,7 +2,6 @@ package jp.whitenoise.common.auth;
 
 import java.util.Optional;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -48,11 +47,9 @@ public class CosmosUserDetailManager implements UserDetailsManager {
         if (userExists(userDetails.getUsername())) {
             throw new IllegalArgumentException("User already exists: " + userDetails.getUsername());
         }
-        User user = new User();
-        user.setUsername(userDetails.getUsername());
+        User user = (User) userDetails;
         user.setPassword(encoder.encode(userDetails.getPassword()));
-        user.getRoles().addAll(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
-        userDao.save(user);
+        userDao.save((User) userDetails);
     }
 
     /**
@@ -60,13 +57,7 @@ public class CosmosUserDetailManager implements UserDetailsManager {
      */
     @Override
     public void updateUser(UserDetails userDetails) {
-        User user = userDao.findById(userDetails.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userDetails.getUsername()));
-        user.setPassword(userDetails.getPassword());
-        user.getRoles().addAll(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
-        user.setEnabled(userDetails.isEnabled());
-        user.setAccountNonLocked(userDetails.isAccountNonLocked());
-        userDao.save(user);
+        userDao.save((User) userDetails);
     }
 
     /**
@@ -84,11 +75,8 @@ public class CosmosUserDetailManager implements UserDetailsManager {
     @Override
     public void changePassword(String oldPassword, String newPassword) {
 
-        String currentUsername = service.getAuthenticatedUser().map(UserDetails::getUsername)
+        User user = (User) service.getAuthenticatedUser()
                 .orElseThrow(() -> new IllegalStateException("Not authenticated."));
-        User user = userDao.findById(currentUsername)
-                .orElseThrow(() -> new IllegalStateException("User not found: " + currentUsername));
-
         // パスワード検証
         if (!user.getPassword().equals(encoder.encode(oldPassword))) {
             throw new IllegalArgumentException("Old password does not match");
@@ -110,15 +98,8 @@ public class CosmosUserDetailManager implements UserDetailsManager {
      */
     @Override
     public UserDetails loadUserByUsername(String username) {
-
         User user = userDao.findById(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword()) // BCrypt ハッシュ済みのパスワード
-                .roles(user.getRoles().toArray(new String[0]))
-                .accountLocked(!user.isAccountNonLocked())
-                .disabled(!user.isEnabled())
-                .build();
+        return user;
     }
 }

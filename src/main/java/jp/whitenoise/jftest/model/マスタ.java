@@ -1,6 +1,8 @@
 package jp.whitenoise.jftest.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,20 +19,20 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Container
-public class 魚種 {
+public class マスタ {
+
+    /** 魚種. */
+    public static final String ID_魚種 = "fishSpec";
 
     @Id
     @GeneratedValue
     private String id;
-    @NonNull
-    private String 名称;
+    private String value;
+    private final List<String> values = new ArrayList<>();
 
     @Version
     private String _etag;

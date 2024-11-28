@@ -38,15 +38,14 @@ import jp.whitenoise.common.util.UiUtil;
 import jp.whitenoise.jftest.model.入港予定;
 import jp.whitenoise.jftest.model.入港予定明細;
 import jp.whitenoise.jftest.model.漁船;
-import jp.whitenoise.jftest.model.魚種;
-import jp.whitenoise.jftest.service.AddService;
+import jp.whitenoise.jftest.service.EditService;
 
 @Route(value = "edit", layout = MainLayout.class)
 @PageTitle("出荷予定登録・編集 - " + JfTestApplication.APP_NAME)
 @PermitAll
 public class EditPage extends VerticalLayout implements HasUrlParameter<String> {
 
-    private final AddService service;
+    private final EditService service;
     private final Binder<入港予定> binder = new Binder<入港予定>();
 
     private final DatePicker dt入港予定日;
@@ -56,7 +55,7 @@ public class EditPage extends VerticalLayout implements HasUrlParameter<String> 
 
     private final List<String> list魚種;
 
-    public EditPage(@Autowired AddService service) {
+    public EditPage(@Autowired EditService service) {
         this.service = service;
         add(new H4("出荷予定登録・編集"));
         setSizeFull();
@@ -86,7 +85,7 @@ public class EditPage extends VerticalLayout implements HasUrlParameter<String> 
         vl明細.setPadding(false);
         add(vl明細);
 
-        list魚種 = service.select魚種().stream().map(魚種::get名称).toList();
+        list魚種 = service.select魚種();
         addItem(new Item().setLabelVisible());
         addItem(new Item());
         addItem(new Item());

@@ -4,26 +4,28 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.stream.Streams;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.whitenoise.common.auth.UserDao;
+import jp.whitenoise.jftest.dao.マスタDao;
 import jp.whitenoise.jftest.dao.入港予定Dao;
 import jp.whitenoise.jftest.dao.漁船Dao;
-import jp.whitenoise.jftest.dao.魚種Dao;
+import jp.whitenoise.jftest.model.マスタ;
 import jp.whitenoise.jftest.model.入港予定;
 import jp.whitenoise.jftest.model.漁船;
-import jp.whitenoise.jftest.model.魚種;
 
 @Service
-//@Transactional
-public class AddService {
+public class EditService {
 
-    @Autowired
+    private マスタDao マスタDao;
     private 漁船Dao 漁船Dao;
-    @Autowired
-    private 魚種Dao 魚種Dao;
-    @Autowired
     private 入港予定Dao 入港予定Dao;
+
+    public EditService(UserDao userDao, マスタDao マスタDao, 漁船Dao 漁船Dao, 入港予定Dao 入港予定Dao) {
+        this.マスタDao = マスタDao;
+        this.漁船Dao = 漁船Dao;
+        this.入港予定Dao = 入港予定Dao;
+    }
 
     public List<漁船> select漁船() {
         // TODO debug
@@ -36,15 +38,23 @@ public class AddService {
         return Streams.of(漁船Dao.findAll()).toList();
     }
 
-    public List<魚種> select魚種() {
+    /**
+     * 魚種リスト取得.
+     * 
+     * @return 魚種リスト
+     */
+    public List<String> select魚種() {
         // TODO debug
-        if (魚種Dao.count() == 0) {
-            魚種Dao.save(new 魚種("マグロ"));
-            魚種Dao.save(new 魚種("サバ"));
-            魚種Dao.save(new 魚種("アジ"));
+        if (!マスタDao.existsById(マスタ.ID_魚種)) {
+            マスタ 魚種 = new マスタ();
+            魚種.setId(マスタ.ID_魚種);
+            魚種.getValues().add("マグロ");
+            魚種.getValues().add("サバ");
+            魚種.getValues().add("アジ");
+            マスタDao.save(魚種);
         }
 
-        return Streams.of(魚種Dao.findAll()).toList();
+        return マスタDao.findValuesById(マスタ.ID_魚種);
     }
 
     public 入港予定 save入港予定(入港予定 entity) {
