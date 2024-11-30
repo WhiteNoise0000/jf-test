@@ -1,4 +1,4 @@
-package jp.whitenoise.common.ui.auth;
+package jp.whitenoise.common.auth.ui;
 
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.login.LoginForm;

@@ -129,7 +129,25 @@ public class AuthService {
     }
 
     /**
-     * ユーザ情報登録・更新.
+     * ユーザ情報更新.
+     * 
+     * @param targetUser 対象ユーザ
+     * @param password パスワード(更新時のみ指定)
+     * @param emailAddr メールアドレス(任意)
+     * @throws OptimisticLockingFailureException 楽観排他エラー
+     */
+    public void save(Optional<User> targetUser, Optional<String> password, Optional<String> emailAddr)
+            throws OptimisticLockingFailureException {
+
+        // ユーザ情報保存
+        User entity = targetUser.orElseThrow(() -> new IllegalArgumentException("User not found."));
+        password.ifPresent(str -> entity.setPassword(encoder.encode(str)));
+        entity.setEmailAddr(emailAddr);
+        userDao.save(entity);
+    }
+
+    /**
+     * ユーザ情報登録・更新(管理者用).
      * 
      * @param targetUser 対象ユーザ(新規ユーザの場合null)
      * @param username ユーザ名
@@ -139,8 +157,8 @@ public class AuthService {
      * @param isEnabled 有効フラグ
      * @throws OptimisticLockingFailureException 楽観排他エラー
      */
-    public void save(Optional<User> targetUser, String username,
-            Optional<String> password, Optional<String> emailAddr, Set<EUserRole> roles, boolean isEnabled)
+    public void save(Optional<User> targetUser, String username, Optional<String> password, Optional<String> emailAddr,
+            Set<EUserRole> roles, boolean isEnabled)
             throws OptimisticLockingFailureException {
 
         User entity = targetUser.orElse(new User());

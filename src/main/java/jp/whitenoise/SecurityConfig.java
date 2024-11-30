@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 
-import jp.whitenoise.common.ui.auth.LoginPage;
+import jp.whitenoise.common.auth.ui.LoginPage;
 
 @EnableWebSecurity
 @Configuration

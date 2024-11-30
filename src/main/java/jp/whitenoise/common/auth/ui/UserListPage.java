@@ -1,4 +1,4 @@
-package jp.whitenoise.common.ui.auth;
+package jp.whitenoise.common.auth.ui;
 
 import java.util.stream.Collectors;
 
@@ -29,9 +29,11 @@ import jp.whitenoise.jftest.ui.MainLayout;
 @RolesAllowed(EUserRole.ROLE_ADMIN)
 public class UserListPage extends VerticalLayout {
 
+    private final AuthService service;
     private final CosmosUserDetailManager manager;
 
     public UserListPage(AuthService service, CosmosUserDetailManager manager) {
+        this.service = service;
         this.manager = manager;
 
         setSizeFull();
@@ -78,7 +80,13 @@ public class UserListPage extends VerticalLayout {
      */
     private void editUser(String username) {
         // 編集画面へ遷移
-        UI.getCurrent().navigate(UserEditPage.class, username);
+        boolean isSelf = service.getAuthUsername().orElse("").equals(username);
+        if (isSelf) {
+            // 自分自身の場合は編集専用ページへ遷移
+            UI.getCurrent().navigate(UserEditPage.class);
+        } else {
+            UI.getCurrent().navigate(AdminEditPage.class, username);
+        }
     }
 
     /**

@@ -1,7 +1,5 @@
 package jp.whitenoise.jftest.ui;
 
-import java.util.Optional;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasText.WhiteSpace;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -15,13 +13,11 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
-import com.vaadin.flow.router.RouteParameters;
-import com.vaadin.flow.router.internal.HasUrlParameterFormat;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 
 import jp.whitenoise.common.auth.AuthService;
-import jp.whitenoise.common.ui.auth.UserEditPage;
-import jp.whitenoise.common.ui.auth.UserListPage;
+import jp.whitenoise.common.auth.ui.UserEditPage;
+import jp.whitenoise.common.auth.ui.UserListPage;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -61,19 +57,13 @@ public class MainLayout extends AppLayout {
     }
 
     private SideNav createSideNav() {
-        RouteParameters params = RouteParameters.empty();
-        Optional<String> username = service.getAuthUsername();
-        if (username.isPresent()) {
-            params = HasUrlParameterFormat.getParameters(username.get());
-        }
         SideNav menu = new SideNav();
-
-        add(menu, new NavItem("集計", TopPage.class, null, VaadinIcon.HOME));
-        add(menu, new NavItem("一覧", ListPage.class, null, VaadinIcon.LIST));
-        add(menu, new NavItem("登録", EditPage.class, null, VaadinIcon.EDIT));
+        add(menu, new NavItem("集計", TopPage.class, VaadinIcon.HOME));
+        add(menu, new NavItem("一覧", ListPage.class, VaadinIcon.LIST));
+        add(menu, new NavItem("登録", EditPage.class, VaadinIcon.EDIT));
         add(menu, "管理", VaadinIcon.BRIEFCASE,
-                new NavItem("ユーザ一覧", UserListPage.class, null, VaadinIcon.USERS),
-                new NavItem("ユーザ情報", UserEditPage.class, params, VaadinIcon.USER));
+                new NavItem("ユーザ一覧", UserListPage.class, VaadinIcon.USERS),
+                new NavItem("ユーザ情報", UserEditPage.class, VaadinIcon.USER));
         return menu;
     }
 
@@ -109,16 +99,11 @@ public class MainLayout extends AppLayout {
         private final String name;
         @NonNull
         private final Class<? extends Component> view;
-        private RouteParameters param;
         private VaadinIcon icon;
 
         private SideNavItem create() {
             SideNavItem item = new SideNavItem(name);
-            if (param != null) {
-                item.setPath(view, param);
-            } else {
-                item.setPath(view);
-            }
+            item.setPath(view);
             item.setPrefixComponent(icon != null ? icon.create() : null);
             return item;
         }
