@@ -1,6 +1,6 @@
 package jp.whitenoise.jftest.ui.admin;
 
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.dataview.GridListDataView;
+import com.vaadin.flow.component.grid.dnd.GridDropLocation;
+import com.vaadin.flow.component.grid.dnd.GridDropMode;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.H5;
 import com.vaadin.flow.component.icon.Icon;
@@ -55,7 +57,7 @@ public class SettingsPage extends VerticalLayout {
         // 魚種
         add(new H5("魚種"));
         grid魚種 = new Grid<String>();
-        list魚種 = grid魚種.setItems(new LinkedHashSet<String>());
+        list魚種 = grid魚種.setItems(new ArrayList<String>()); // D&DにList型必須
         grid魚種.setEmptyStateText("魚種が未登録です。");
         grid魚種.addColumn(s -> s).setHeader("魚種名");
         grid魚種.addComponentColumn(s -> {
@@ -65,19 +67,48 @@ public class SettingsPage extends VerticalLayout {
             return new Button(delIcon, event -> {
                 list魚種.removeItem(s);
             });
-
+        }).setHeader("削除");
+        grid魚種.setRowsDraggable(true); // D&D許可
+        String[] draggedItem = new String[1];
+        grid魚種.addDragStartListener(e -> {
+            draggedItem[0] = e.getDraggedItems().get(0);
+            grid魚種.setDropMode(GridDropMode.BETWEEN);
+        });
+        grid魚種.addDropListener(e -> {
+            String target = e.getDropTargetItem().orElse(null);
+            GridDropLocation dropLocation = e.getDropLocation();
+            if (target == null || draggedItem[0].equals(target)) {
+                return;
+            }
+            list魚種.removeItem(draggedItem[0]);
+            if (dropLocation == GridDropLocation.BELOW) {
+                list魚種.addItemAfter(draggedItem[0], target);
+            } else {
+                list魚種.addItemBefore(draggedItem[0], target);
+            }
+        });
+        grid魚種.addDragEndListener(e -> {
+            draggedItem[0] = null;
+            grid魚種.setDropMode(null);
         });
         add(grid魚種);
 
         TextField txt新規魚種名 = new TextField();
         txt新規魚種名.setMaxLength(16);
+        txt新規魚種名.setManualValidation(true);
+        txt新規魚種名.setErrorMessage("既に登録済みの魚種名です。");
         Button btn魚種追加 = new Button("追加", event -> {
-            if (txt新規魚種名.isEmpty()) {
+            String item = txt新規魚種名.getValue();
+            boolean isDuplicate = list魚種.contains(item);
+            txt新規魚種名.setInvalid(isDuplicate);
+            if (isDuplicate) {
                 return;
             }
-            list魚種.addItem(txt新規魚種名.getValue());
+            list魚種.addItem(item);
             txt新規魚種名.clear();
         });
+        // 値入力時のみボタン有効
+        txt新規魚種名.addValueChangeListener(event -> btn魚種追加.setEnabled(!event.getValue().isEmpty()));
         add(new HorizontalLayout(txt新規魚種名, btn魚種追加));
 
         // 保存ボタン
