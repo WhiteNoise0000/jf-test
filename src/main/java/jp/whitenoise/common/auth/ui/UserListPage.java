@@ -24,7 +24,7 @@ import jp.whitenoise.common.auth.EUserRole;
 import jp.whitenoise.common.auth.User;
 import jp.whitenoise.jftest.ui.MainLayout;
 
-@Route(value = "admin/userList", layout = MainLayout.class)
+@Route(value = "users/list", layout = MainLayout.class)
 @PageTitle("ユーザ一覧 - " + JfTestApplication.APP_NAME)
 @RolesAllowed(EUserRole.ROLE_ADMIN)
 public class UserListPage extends VerticalLayout {

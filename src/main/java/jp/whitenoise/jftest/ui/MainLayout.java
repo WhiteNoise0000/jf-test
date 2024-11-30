@@ -27,11 +27,9 @@ import lombok.RequiredArgsConstructor;
  */
 public class MainLayout extends AppLayout {
 
-    private final AuthService service;
     private final AccessAnnotationChecker accessChecker;
 
     public MainLayout(AuthService service, AccessAnnotationChecker accessChecker) {
-        this.service = service;
         this.accessChecker = accessChecker;
 
         H3 title = new H3("漁獲・出荷予定速報");

@@ -30,7 +30,7 @@ import jp.whitenoise.common.ui.WarnNotification;
 import jp.whitenoise.common.util.UiUtil;
 import jp.whitenoise.jftest.ui.MainLayout;
 
-@Route(value = "admin/userEdit", layout = MainLayout.class)
+@Route(value = "users/edit", layout = MainLayout.class)
 @PageTitle("ユーザ編集 - " + JfTestApplication.APP_NAME)
 @PermitAll
 public class UserEditPage extends VerticalLayout implements HasUrlParameter<String> {

@@ -25,7 +25,7 @@ import jp.whitenoise.common.ui.WarnNotification;
 import jp.whitenoise.common.util.UiUtil;
 import jp.whitenoise.jftest.ui.MainLayout;
 
-@Route(value = "admin/adminEdit", layout = MainLayout.class)
+@Route(value = "users/adminEdit", layout = MainLayout.class)
 @PageTitle("ユーザ登録・編集 - " + JfTestApplication.APP_NAME)
 @RolesAllowed(EUserRole.ROLE_ADMIN)
 public class AdminEditPage extends UserEditPage implements HasUrlParameter<String> {
