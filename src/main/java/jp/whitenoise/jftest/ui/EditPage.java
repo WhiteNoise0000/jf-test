@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import jakarta.annotation.security.PermitAll;
 
@@ -53,7 +54,7 @@ public class EditPage extends VerticalLayout implements HasUrlParameter<String> 
     private final VerticalLayout vl明細;
     private final List<Item> list入港予定明細 = new ArrayList<>();
 
-    private final List<String> list魚種;
+    private final Set<String> list魚種;
 
     public EditPage(@Autowired EditService service) {
         this.service = service;

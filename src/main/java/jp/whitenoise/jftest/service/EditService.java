@@ -2,6 +2,7 @@ package jp.whitenoise.jftest.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.lang3.stream.Streams;
 import org.springframework.stereotype.Service;
@@ -43,17 +44,7 @@ public class EditService {
      * 
      * @return 魚種リスト
      */
-    public List<String> select魚種() {
-        // TODO debug
-        if (!マスタDao.existsById(マスタ.ID_魚種)) {
-            マスタ 魚種 = new マスタ();
-            魚種.setId(マスタ.ID_魚種);
-            魚種.getValues().add("マグロ");
-            魚種.getValues().add("サバ");
-            魚種.getValues().add("アジ");
-            マスタDao.save(魚種);
-        }
-
+    public Set<String> select魚種() {
         return マスタDao.findValuesById(マスタ.ID_魚種);
     }
 
