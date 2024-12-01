@@ -40,6 +40,7 @@ jar {
 }
 
 bootJar {
+    archiveFileName = 'jf-app.jar'
 	enabled = true // 実行可能JARのみを生成
 }
 
