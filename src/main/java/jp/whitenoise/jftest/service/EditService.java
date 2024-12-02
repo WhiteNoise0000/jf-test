@@ -2,7 +2,6 @@ package jp.whitenoise.jftest.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.apache.commons.lang3.stream.Streams;
 import org.springframework.stereotype.Service;
@@ -44,7 +43,7 @@ public class EditService {
      * 
      * @return 魚種リスト
      */
-    public Set<String> select魚種() {
+    public List<String> select魚種() {
         return マスタDao.findValuesById(マスタ.ID_魚種);
     }
 

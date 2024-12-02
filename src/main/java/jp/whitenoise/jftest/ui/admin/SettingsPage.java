@@ -1,7 +1,6 @@
 package jp.whitenoise.jftest.ui.admin;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 import jakarta.annotation.security.RolesAllowed;
 
@@ -20,6 +19,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -108,6 +108,7 @@ public class SettingsPage extends VerticalLayout {
             txt新規魚種名.clear();
         });
         // 値入力時のみボタン有効
+        txt新規魚種名.setValueChangeMode(ValueChangeMode.EAGER);
         txt新規魚種名.addValueChangeListener(event -> btn魚種追加.setEnabled(!event.getValue().isEmpty()));
         add(new HorizontalLayout(txt新規魚種名, btn魚種追加));
 
@@ -141,7 +142,7 @@ public class SettingsPage extends VerticalLayout {
      * 魚種保存.
      */
     private void save魚種() {
-        service.save魚種(list魚種.getItems().collect(Collectors.toSet()));
+        service.save魚種(list魚種.getItems().toList());
         new SuccessNotification("保存しました。").open();
     }
 

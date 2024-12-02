@@ -1,8 +1,8 @@
 package jp.whitenoise.jftest.model;
 
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -36,7 +36,7 @@ public class マスタ {
     @NonNull
     private String id;
     private String value = "";
-    private final Set<String> values = new LinkedHashSet<>();
+    private final List<String> values = new ArrayList<>();
 
     @Version
     private String _etag;

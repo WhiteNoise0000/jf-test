@@ -1,7 +1,7 @@
 package jp.whitenoise.jftest.service;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class SettingsService {
      * @param siteName 魚種リスト
      */
     public void saveサイト名(String siteName) {
-        マスタ entity = dao.findById(マスタ.ID_サイト名).orElse(new マスタ(マスタ.ID_サイト名));
+        マスタ entity = dao.findById(マスタ.ID_サイト名).orElse(new マスタ(マスタ.ID_魚種));
         entity.setValue(siteName);
         dao.save(entity);
     }
@@ -45,7 +45,7 @@ public class SettingsService {
      * 
      * @return 魚種リスト
      */
-    public Set<String> select魚種() {
+    public List<String> select魚種() {
         return dao.findValuesById(マスタ.ID_魚種);
     }
 
@@ -55,7 +55,7 @@ public class SettingsService {
      * @param list 魚種リスト
      */
     public void save魚種(Collection<String> list) {
-        マスタ entity = dao.findById(マスタ.ID_魚種).orElse(new マスタ(マスタ.ID_サイト名));
+        マスタ entity = dao.findById(マスタ.ID_魚種).orElse(new マスタ(マスタ.ID_魚種));
         entity.getValues().clear();
         entity.getValues().addAll(list);
         dao.save(entity);
