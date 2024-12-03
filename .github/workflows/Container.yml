@@ -80,5 +80,5 @@ jobs:
         az containerapp update \
           --name jf-waf \
           --resource-group t-jpnwest \
-          ----container-name jf-app \
+          --container-name jf-app \
           --image ghcr.io/whitenoise0000/jf-app:${{ github.sha }}
