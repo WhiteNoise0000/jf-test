@@ -58,6 +58,9 @@ dependencies {
 	// Azure Application Insights(監視)
 	//implementation 'com.microsoft.azure:applicationinsights-runtime-attach:3.6.2'
 
+    // Spring Boot Admin Client
+    implementation 'de.codecentric:spring-boot-admin-starter-client:3.4.0'
+
 	// LINE Messaging API
 	implementation 'com.linecorp.bot:line-bot-messaging-api-client:9.3.1'
 
