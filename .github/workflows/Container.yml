@@ -65,20 +65,20 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Login to Azure
-      uses: azure/login@v2.2.0
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Deploy to Azure Container Apps
-      run: |
-        set -e
-        echo "Setting Azure subscription..."
-        az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        echo "Updating Container App..."
-        az containerapp update \
-          --name jf-waf \
-          --resource-group t-jpnwest \
-          --container-name jf-app \
-          --image ghcr.io/whitenoise0000/jf-app:${{ github.sha }}
+#    steps:
+#    - name: Login to Azure
+#      uses: azure/login@v2.2.0
+#      with:
+#        creds: ${{ secrets.AZURE_CREDENTIALS }}
+#
+#    - name: Deploy to Azure Container Apps
+#      run: |
+#        set -e
+#        echo "Setting Azure subscription..."
+#        az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#        echo "Updating Container App..."
+#        az containerapp update \
+#          --name jf-waf \
+#          --resource-group t-jpnwest \
+#          --container-name jf-app \
+#          --image ghcr.io/whitenoise0000/jf-app:${{ github.sha }} 
