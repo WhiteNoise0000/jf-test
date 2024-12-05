@@ -24,7 +24,7 @@ jobs:
     runs-on: "ubuntu-20.04"
     steps:
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+        uses: aquasecurity/trivy-action@0.29.0
         with:
           image-ref: 'ghcr.io/whitenoise0000/jf-app:latest'
           format: 'template'
