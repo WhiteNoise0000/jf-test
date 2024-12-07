@@ -15,12 +15,17 @@ import com.vaadin.flow.theme.lumo.LumoIcon;
  */
 public class SuccessNotification extends Notification {
 
-    public SuccessNotification(String errMsg) {
+    /**
+     * コンストラクタ.
+     * 
+     * @param successMsg 通知メッセージ
+     */
+    public SuccessNotification(String successMsg) {
         addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         setPosition(Position.TOP_CENTER);
         setDuration(15000); // 最大15秒表示
 
-        Div text = new Div(new Text(errMsg));
+        Div text = new Div(new Text(successMsg));
         Button btnClose = new Button(LumoIcon.CROSS.create());
         btnClose.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         btnClose.getElement().setAttribute("aria-label", "閉じる");

@@ -18,6 +18,7 @@ import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import jp.whitenoise.common.auth.AuthService;
 import jp.whitenoise.common.auth.ui.UserEditPage;
 import jp.whitenoise.common.auth.ui.UserListPage;
+import jp.whitenoise.jftest.ui.admin.BoatListPage;
 import jp.whitenoise.jftest.ui.admin.SettingsPage;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
@@ -61,6 +62,7 @@ public class MainLayout extends AppLayout {
         add(menu, new NavItem("一覧", ListPage.class, VaadinIcon.LIST));
         add(menu, new NavItem("登録", EditPage.class, VaadinIcon.EDIT));
         add(menu, "管理", VaadinIcon.TOOLBOX,
+                new NavItem("漁船一覧", BoatListPage.class, VaadinIcon.BOAT),
                 new NavItem("ユーザ一覧", UserListPage.class, VaadinIcon.USERS),
                 new NavItem("ユーザ情報", UserEditPage.class, VaadinIcon.USER),
                 new NavItem("システム設定", SettingsPage.class, VaadinIcon.TOOLS));

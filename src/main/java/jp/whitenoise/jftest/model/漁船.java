@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Container
 public class 漁船 {
 
@@ -31,6 +33,7 @@ public class 漁船 {
     private String id;
     @NonNull
     private String 漁船名;
+    private String 備考;
 
     @Version
     private String _etag;
