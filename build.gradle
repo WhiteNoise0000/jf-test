@@ -50,7 +50,7 @@ dependencies {
 	// Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'com.github.appreciated:apexcharts:23.0.0'
+	// implementation 'com.github.appreciated:apexcharts:23.0.0'
 	
 	// Azure/CosmosDB
 	implementation 'com.azure.spring:spring-cloud-azure-starter'
@@ -58,11 +58,8 @@ dependencies {
 	// Azure Application Insights(監視)
 	//implementation 'com.microsoft.azure:applicationinsights-runtime-attach:3.6.2'
 
-    // Spring Boot Admin Client
-    implementation 'de.codecentric:spring-boot-admin-starter-client:3.4.0'
-
 	// LINE Messaging API
-	implementation 'com.linecorp.bot:line-bot-messaging-api-client:9.3.1'
+	// implementation 'com.linecorp.bot:line-bot-messaging-api-client:9.3.1'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
