@@ -19,7 +19,8 @@ jobs:
       - name: Set up Java version
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: 'java21'
+          distribution: 'microsoft'
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v3
