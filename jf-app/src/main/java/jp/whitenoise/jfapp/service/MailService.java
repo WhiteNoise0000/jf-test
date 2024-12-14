@@ -46,7 +46,7 @@ public class MailService {
      */
     public MailService(メール配信Dao dao,
             @Value("${mail.conStr}") String conStr,
-            @Value("${mail.formAddress}") String fromAddress) {
+            @Value("${mail.fromAddress}") String fromAddress) {
         this.dao = dao;
         this.mailClient = new EmailClientBuilder().connectionString(conStr).buildClient();
         this.fromAddress = fromAddress;

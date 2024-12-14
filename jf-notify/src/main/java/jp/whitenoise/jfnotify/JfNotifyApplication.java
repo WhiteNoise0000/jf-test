@@ -19,7 +19,7 @@ public class JfNotifyApplication {
         // LINE Messaging API
         String lineToken = Objects.requireNonNull(System.getenv("APPSETTING_line_token"));
         // Azure Communication Service(mail)
-        String mailConstr = Objects.requireNonNull(System.getenv("APPSETTING_mail_constr"));
+        String mailConstr = Objects.requireNonNull(System.getenv("APPSETTING_mail_conStr"));
         String mailFromAddress = Objects.requireNonNull(System.getenv("APPSETTING_mail_fromAddress"));
 
         // 翌日分のデータを取得しLINE/メール通知
