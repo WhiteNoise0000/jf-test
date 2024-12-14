@@ -47,6 +47,8 @@ public class NotifyEmail {
         send.setSenderAddress(fromAddress);
         // BCCで送信
         send.setBccRecipients(address.stream().map(t -> new EmailAddress(t)).toList());
+        // 本文
+        send.setBodyPlainText(messages);
 
         // メール送信開始
         SyncPoller<EmailSendResult, EmailSendResult> poller = mailClient.beginSend(send);

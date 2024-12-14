@@ -59,7 +59,10 @@ public class SecurityConfig extends VaadinWebSecurity {
             // AuthServiceを利用するとDIループとなるため、同一ロジックで取得
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth == null || !auth.isAuthenticated()) {
-                return Optional.empty();
+                return Optional.of("anonymousUser");
+            }
+            if (auth.getPrincipal() instanceof String) {
+                return Optional.of((String) auth.getPrincipal());
             }
             return Optional.of(((User) auth.getPrincipal()).getUsername());
         };
