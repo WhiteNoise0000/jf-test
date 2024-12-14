@@ -43,12 +43,17 @@ jobs:
           name: jf-app
           path: jf-app/build/libs/jf-app.jar
 
-      - name: Upload artifact for jf-notify
+      - name: Upload artifact for jf-notify(jar)
         uses: actions/upload-artifact@v4
         with:
-          name: jf-notify
+          name: jf-notify-jar
+          path: jf-notify/build/libs/jf-notify.jar
+
+      - name: Upload artifact for jf-notify(sh/jar)
+        uses: actions/upload-artifact@v4
+        with:
+          name: jf-notify-sh
           path: |
-            jf-notify/build/libs/jf-notify.jar
             jf-notify/run.sh
             jf-notify/settings.job
   
@@ -95,6 +100,9 @@ jobs:
         with:
           name: jf-app
 
+      - name: Unzip archive
+        run: unzip jf-app.zip && rm jf-app.zip
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -111,9 +119,10 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: jf-notify
+          pattern: jf-notify-*
+          merge-multiple: true
 
-      - name: 📂 Upload artifact
+      - name: Upload artifact
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.WEBJOB_FTPS_SERVER }}
