@@ -106,7 +106,7 @@ jobs:
         with:
           app-name: 'jf-app'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A64247CC006943F4BA21986A51E4DCAA }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BB3D5CE208C44E8692FEDA5F586DFB9B }}
           package: 'jf-app.jar'
 
   jf-notify_deploy:
