@@ -100,9 +100,6 @@ jobs:
         with:
           name: jf-app
 
-      - name: Unzip archive
-        run: unzip jf-app.zip && rm jf-app.zip
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -129,7 +126,7 @@ jobs:
           username: ${{ secrets.WEBJOB_FTPS_USER }}
           password: ${{ secrets.WEBJOB_FTPS_PASSWORD }}
           protocol: ftps
-          server-dir: /site/wwwroot/App_Data/jobs/triggered/jf-notify
+          server-dir: /site/wwwroot/App_Data/jobs/triggered/jf-notify/
 
   trivy_scan:
     permissions:
