@@ -6,6 +6,12 @@ jar {
     enabled = false // rootプロジェクトのJAR作成不要
 }
 
+ext {
+    set('vaadinVersion', '24.5.8')
+    set('springCloudAzureVersion', '5.18.0')
+    set('azureSdkVersion', '1.2.30')
+}
+
 subprojects {
     apply plugin: 'java'
 

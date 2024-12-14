@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     // Azure/CosmosDB/Email
-    implementation platform('com.azure:azure-sdk-bom:1.2.30')
+    implementation platform("com.azure:azure-sdk-bom:$azureSdkVersion")
     implementation 'com.azure:azure-cosmos'
     implementation 'com.azure:azure-communication-email'
 
