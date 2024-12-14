@@ -1,0 +1,44 @@
+plugins {
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'com.vaadin' version '24.5.8'
+}
+
+ext {
+    set('vaadinVersion', '24.5.8')
+    set('springCloudAzureVersion', '5.18.0')
+}
+
+// ビルド環境判定→ローカル以外は商用ビルド
+vaadin {
+    productionMode = !project.hasProperty('isLocal')
+}
+
+bootJar {
+    archiveFileName = 'jf-app.jar'
+    enabled = true // 実行可能JARのみを生成
+}
+
+dependencies {
+    // Vaadin Flow
+    implementation platform("com.vaadin:vaadin-bom:${vaadinVersion}")
+    implementation('com.vaadin:vaadin-spring-boot-starter') {
+        exclude group: 'com.vaadin', module: 'hilla'
+        exclude group: 'com.vaadin', module: 'hilla-dev'
+    }
+
+    // Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // Azure/CosmosDB/Email
+    implementation platform("com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}")
+    implementation 'com.azure.spring:spring-cloud-azure-starter'
+    implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
+    implementation 'com.azure:azure-communication-email'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    //testImplementation 'org.springframework.security:spring-security-test'
+}

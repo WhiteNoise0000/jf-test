@@ -1,76 +1,42 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.0'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'com.vaadin' version '24.5.7'
-}
-
-group = 'io.github.whitenoise0000'
-version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_21
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
-repositories {
-	mavenCentral()
-	maven {
-		url "https://maven.vaadin.com/vaadin-addons"
-	}
-}
-
-ext {
-	set('vaadinVersion', "24.5.7")
-	set('springCloudAzureVersion', "5.18.0")
-}
-
-// ビルド環境判定→ローカル以外は商用ビルド
-vaadin {
-	productionMode = !project.hasProperty('isLocal')
+    id 'java'
 }
 
 jar {
-	enabled = false // デフォルトのJAR生成を無効化
+    enabled = false // rootプロジェクトのJAR作成不要
 }
 
-bootJar {
-    archiveFileName = 'jf-app.jar'
-	enabled = true // 実行可能JARのみを生成
-}
+subprojects {
+    apply plugin: 'java'
 
-dependencies {
-	// Vaadin Flow
-	implementation 'com.vaadin:vaadin-spring-boot-starter'
-	// Spring Boot
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	// implementation 'com.github.appreciated:apexcharts:23.0.0'
-	
-	// Azure/CosmosDB
-	implementation 'com.azure.spring:spring-cloud-azure-starter'
-	implementation 'com.azure.spring:spring-cloud-azure-starter-data-cosmos'
-	// Azure Application Insights(監視)
-	//implementation 'com.microsoft.azure:applicationinsights-runtime-attach:3.6.2'
+    group = 'io.github.whitenoise0000'
+    version = '0.0.1-SNAPSHOT'
 
-	// LINE Messaging API
-	// implementation 'com.linecorp.bot:line-bot-messaging-api-client:9.3.1'
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://maven.vaadin.com/vaadin-addons"
+        }
+    }
 
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-}
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 
-dependencyManagement {
-	imports {
-		mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
-		mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
-	}
+    jar {
+        // いずれもFatJARを用いるため、デフォルトのJAR生成を無効化
+        enabled = false
+    }
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.18.36'
+        annotationProcessor 'org.projectlombok:lombok:1.18.36'
+    }
 }
