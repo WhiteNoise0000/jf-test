@@ -32,6 +32,7 @@ public class メール配信 {
     @Id
     @GeneratedValue
     private String id;
+    private String encryptedId;
     @NonNull
     private String アドレス;
     private boolean 検証済み = false;

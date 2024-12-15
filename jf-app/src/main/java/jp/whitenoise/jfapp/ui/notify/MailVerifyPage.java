@@ -10,19 +10,21 @@ import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import jp.whitenoise.JfApplication;
 import jp.whitenoise.jfapp.service.MailService;
 import jp.whitenoise.jfapp.ui.MainLayout;
-import jp.whitenoise.jfapp.ui.TopPage;
 
-@Route(value = "mail/verify", layout = MainLayout.class)
-@PageTitle("メール登録 - " + JfApplication.APP_NAME)
+@Route(value = "mailVerify", layout = MainLayout.class)
+@PageTitle("メール配信 - " + JfApplication.APP_NAME)
 @AnonymousAllowed
 public class MailVerifyPage extends VerticalLayout implements HasUrlParameter<String> {
 
     /** メール配信サービス. */
     private final MailService serivce;
+    /** メッセージ. */
+    private final Div message;
 
     /**
      * コンストラクタ.
@@ -30,11 +32,11 @@ public class MailVerifyPage extends VerticalLayout implements HasUrlParameter<St
     public MailVerifyPage(MailService serivce) {
         this.serivce = serivce;
 
-        add(new H4("メール配信登録"));
-        Div message = new Div("メールアドレスを本登録しました。");
+        add(new H4("メールアドレス本登録"));
+        message = new Div();
         Button btn戻る = new Button("戻る");
         btn戻る.addClickListener(event -> {
-            UI.getCurrent().navigate(TopPage.class);
+            UI.getCurrent().navigate(MailSubscribePage.class);
         });
         add(message, btn戻る);
     }
@@ -42,6 +44,13 @@ public class MailVerifyPage extends VerticalLayout implements HasUrlParameter<St
     @Override
     public void setParameter(BeforeEvent event, String id) {
         // メールアドレス本登録
-        serivce.verify(id);
+        if (serivce.verify(id)) {
+            message.setText("メールアドレスを本登録しました。");
+        }
+        // 登録なし
+        else {
+            message.setText("無効なリンクです。再度仮登録を行ってください。");
+            message.addClassName(LumoUtility.TextColor.ERROR);
+        }
     }
 }

@@ -1,5 +1,8 @@
 package jp.whitenoise;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -39,5 +42,14 @@ public class JfApplication {
                 //                }
             });
         };
+    }
+
+    /**
+     * @return メール送信用非同期サービス
+     */
+    @Bean
+    ExecutorService sendService() {
+        // ひとまず4スレッド処理
+        return Executors.newFixedThreadPool(4);
     }
 }
