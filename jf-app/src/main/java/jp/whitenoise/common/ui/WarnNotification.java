@@ -1,6 +1,5 @@
 package jp.whitenoise.common.ui;
 
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
@@ -15,19 +14,22 @@ import com.vaadin.flow.theme.lumo.LumoIcon;
  */
 public class WarnNotification extends Notification {
 
-    public WarnNotification(String errMsg) {
+    public WarnNotification(String warnMsg) {
         addThemeVariants(NotificationVariant.LUMO_WARNING);
         setPosition(Position.TOP_CENTER);
         setDuration(15000); // 最大15秒表示
 
-        Div text = new Div(new Text(errMsg));
+        Div text = new Div();
+        for (String line : warnMsg.split("\n")) {
+            add(new Div(line));
+        }
         Button btnClose = new Button(LumoIcon.CROSS.create());
         btnClose.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         btnClose.getElement().setAttribute("aria-label", "閉じる");
         btnClose.addClickListener(e -> close());
 
         HorizontalLayout layout = new HorizontalLayout(text, btnClose);
-        layout.setAlignItems(Alignment.CENTER);
+        layout.setAlignItems(Alignment.BASELINE);
 
         add(layout);
     }
