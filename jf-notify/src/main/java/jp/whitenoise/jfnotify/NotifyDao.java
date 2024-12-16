@@ -82,7 +82,7 @@ public class NotifyDao implements Closeable {
      * @return アドレスリスト
      */
     public List<String> selectVerifiedAddress() {
-        String sql = "SELECT c.アドレス FROM c WHERE 検証済み = true";
+        String sql = "SELECT c.アドレス FROM c WHERE c.検証済み = true";
         CosmosQueryRequestOptions option = new CosmosQueryRequestOptions();
         return db.getContainer("メール配信").queryItems(sql, option, String.class).stream().toList();
     }
