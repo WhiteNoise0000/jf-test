@@ -55,7 +55,7 @@ public class NotifyEmail {
         EmailSendResult result = poller.waitForCompletion().getValue(); // 送信完了まで待機
 
         // 送信結果出力
-        System.out.println("status:" + result.getStatus());
+        System.out.println("Mail result: " + result.getStatus());
         if (result.getStatus() != EmailSendStatus.SUCCEEDED) {
             System.out.println(result.getError());
         }

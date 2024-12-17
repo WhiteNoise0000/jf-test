@@ -11,6 +11,7 @@ import com.azure.cosmos.CosmosClient;
 import com.azure.cosmos.CosmosClientBuilder;
 import com.azure.cosmos.CosmosDatabase;
 import com.azure.cosmos.models.CosmosQueryRequestOptions;
+import com.fasterxml.jackson.databind.JsonNode;
 
 /**
  * 通知処理Dao.
@@ -84,7 +85,8 @@ public class NotifyDao implements Closeable {
     public List<String> selectVerifiedAddress() {
         String sql = "SELECT c.アドレス FROM c WHERE c.検証済み = true";
         CosmosQueryRequestOptions option = new CosmosQueryRequestOptions();
-        return db.getContainer("メール配信").queryItems(sql, option, String.class).stream().toList();
+        return db.getContainer("メール配信").queryItems(sql, option, JsonNode.class).stream()
+                .map(jsonNode -> jsonNode.get("アドレス").asText()).toList();
     }
 
     @Override
