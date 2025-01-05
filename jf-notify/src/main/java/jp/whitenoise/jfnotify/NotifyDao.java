@@ -3,6 +3,7 @@ package jp.whitenoise.jfnotify;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public class NotifyDao implements Closeable {
      * 
      * @return 通知メッセージ
      */
-    public String createSummaryMessage(String date) {
+    public Optional<String> createSummaryMessage(String date) {
         logger.info("取得対象日：" + date);
 
         String sql = """
@@ -69,12 +70,13 @@ public class NotifyDao implements Closeable {
             sb.append(item.get魚種()).append('：').append(item.get数量()).append('\n');
         }
         if (sb.isEmpty()) {
-            sb.append("出荷予定の登録がありません。");
+            // 出荷予定なし
+            return Optional.empty();
         }
 
         // TODO テンプレート可変化
         String template = DEFAULUT_TEMPLATE;
-        return template.replace("${date}", date).replace("${content}", sb.toString());
+        return Optional.of(template.replace("${date}", date).replace("${content}", sb.toString()));
     }
 
     /**

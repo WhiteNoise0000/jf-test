@@ -3,6 +3,7 @@ package jp.whitenoise.jfnotify;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 定時通知バッチ.
@@ -25,10 +26,14 @@ public class JfNotifyApplication {
         // 翌日分のデータを取得しLINE/メール通知
         String targetDate = LocalDate.now().plusDays(1).toString();
         try (NotifyDao reader = new NotifyDao(endpoint, key, dbName)) {
-            String msg = reader.createSummaryMessage(targetDate);
+            Optional<String> msg = reader.createSummaryMessage(targetDate);
+            if (msg.isEmpty()) {
+                // 通知対象がない場合は送信スキップ
+                return;
+            }
             List<String> address = reader.selectVerifiedAddress();
-            new NotifyLINE(lineToken).broadcast(msg);
-            new NotifyEmail(mailConstr, mailFromAddress).broadcast(msg, address);
+            new NotifyLINE(lineToken).broadcast(msg.get());
+            new NotifyEmail(mailConstr, mailFromAddress).broadcast(msg.get(), address);
         }
     }
 }
