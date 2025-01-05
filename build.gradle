@@ -7,7 +7,7 @@ jar {
 }
 
 ext {
-    set('vaadinVersion', '24.5.8')
+    set('vaadinVersion', '24.6.0')
     set('springCloudAzureVersion', '5.18.0')
     set('azureSdkVersion', '1.2.30')
 }
