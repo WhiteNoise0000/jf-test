@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -56,6 +57,6 @@ public class ListPage extends VerticalLayout {
             });
         }
         grid.setSizeFull();
-        add(grid);
+        add(grid, new Paragraph("※登録内容は最終出荷日＋7日経過時に自動削除します"));
     }
 }

@@ -62,4 +62,6 @@ public class 入港予定 {
     private LocalDateTime lastModifyedDate;
     @LastModifiedBy
     private String lastModifiedBy;
+    /** 有効期限(秒). */
+    private long ttl = -1;
 }
