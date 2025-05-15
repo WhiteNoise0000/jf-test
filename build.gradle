@@ -7,10 +7,10 @@ jar {
 }
 
 ext {
-    set('springBootVersion', '3.4.1')
-    set('vaadinVersion', '24.6.2')
-    set('springCloudAzureVersion', '5.18.0')
-    set('azureSdkVersion', '1.2.30')
+    set('springBootVersion', '3.4.5')
+    set('vaadinVersion', '24.7.4')
+    set('springCloudAzureVersion', '5.22.0')
+    set('azureSdkVersion', '1.2.34')
 }
 
 subprojects {
